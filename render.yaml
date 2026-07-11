@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: nova-org
+    runtime: static
+    buildCommand: npm run build
+    staticPublishPath: .
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: NOVA_ORGANISATION_ID
+        value: "00000000-0000-0000-0000-000000000001"
+      - key: NOVA_PROVIDER
+        value: supabase

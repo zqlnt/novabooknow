@@ -1,0 +1,38 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      ".env",
+      ".env.*",
+      ".git/**",
+      ".gitignore",
+      "node_modules/**",
+      "supabase/**",
+      "scripts/**",
+      "README.md",
+      ".cursor/**",
+      "*.png",
+      "*.jpg",
+      "*.webp"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "config.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ]
+  }
+}
