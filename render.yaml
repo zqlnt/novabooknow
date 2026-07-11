@@ -3,7 +3,7 @@ services:
     name: nova-org
     runtime: static
     buildCommand: npm run build
-    staticPublishPath: .
+    staticPublishPath: dist
     envVars:
       - key: SUPABASE_URL
         sync: false

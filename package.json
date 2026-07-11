@@ -4,8 +4,11 @@
   "private": true,
   "description": "Nova Org institution management shell",
   "scripts": {
-    "build": "node scripts/build-config.js",
-    "start": "npx --yes serve . -l 3000",
-    "dev": "npm run build && npm start"
+    "build": "node scripts/build-config.js && node scripts/build-dist.js",
+    "start": "npx --yes serve dist -l 3000",
+    "dev": "npm run build && npx --yes serve . -l 3000"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.7"
   }
 }
