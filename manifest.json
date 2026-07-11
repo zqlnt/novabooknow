@@ -1,0 +1,19 @@
+{
+  "name": "Nova Org",
+  "short_name": "Nova Org",
+  "description": "Institution management for schools, learning centres, and organisations.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f5f7",
+  "theme_color": "#f5f5f7",
+  "icons": [
+    {
+      "src": "assets/nova-favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

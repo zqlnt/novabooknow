@@ -27,7 +27,7 @@ if (fs.existsSync(dist)) {
 }
 fs.mkdirSync(dist, { recursive: true });
 
-const copyList = ['index.html', 'config.js', 'assets', 'src', 'supabase', 'netlify.toml', 'vercel.json', 'render.yaml'];
+const copyList = ['index.html', 'config.js', 'manifest.json', 'sw.js', 'assets', 'src', 'supabase', 'netlify.toml', 'vercel.json', 'render.yaml'];
 for (const item of copyList) {
   copyRecursive(path.join(root, item), path.join(dist, item));
 }
