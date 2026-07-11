@@ -164,11 +164,20 @@ async function mountCharts(payload, uiState) {
   const filtered = sortFamilies(filterFamilies(payload.families, uiState.search), uiState.sort);
   const hasTrend = payload.trend.some((r) => r.invoiced > 0 || r.received > 0);
 
-  await Promise.all([
+  const results = await Promise.allSettled([
     mountFamilyRevenueChart(document.getElementById('familyRevenueChart'), filtered),
     mountProfitCostDonut(document.getElementById('profitCostDonut'), payload.overview),
-    hasTrend ? mountMonthlyFinanceTrend(document.getElementById('monthlyFinanceTrend'), payload.trend, payload.overview) : Promise.resolve(),
+    hasTrend
+      ? mountMonthlyFinanceTrend(document.getElementById('monthlyFinanceTrend'), payload.trend, payload.overview)
+      : Promise.resolve(),
   ]);
+
+  results.forEach((result, index) => {
+    if (result.status === 'rejected') {
+      const names = ['family revenue chart', 'profit/cost donut', 'monthly trend chart'];
+      console.error(`Nova finance ${names[index]} failed:`, result.reason);
+    }
+  });
 }
 
 function bindToolbar(root, ctx) {
@@ -250,7 +259,13 @@ export async function mountFinanceView({
 
         root.innerHTML = mode === 'detail' ? renderDetailPanel(payload, ctx.uiState) : renderDashboard(payload, ctx.uiState);
         bindToolbar(root, ctx);
-        if (mode === 'dashboard') await mountCharts(payload, ctx.uiState);
+        if (mode === 'dashboard') {
+          try {
+            await mountCharts(payload, ctx.uiState);
+          } catch (chartError) {
+            console.error('Nova finance charts failed:', chartError);
+          }
+        }
       } catch (error) {
         if (error.name === 'AbortError') return;
         root.innerHTML = renderError(error);

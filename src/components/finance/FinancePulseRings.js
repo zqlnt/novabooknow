@@ -6,10 +6,11 @@ function ringArc(value, radius, className, reducedMotion) {
   const offset = circumference * (1 - pct / 100);
   const anim = reducedMotion ? '' : ' class="finance-ring-arc-animate"';
   return `
-    <circle class="finance-ring-track" cx="100" cy="100" r="${radius}"></circle>
+    <circle class="finance-ring-track" cx="100" cy="100" r="${radius}" fill="none"></circle>
     <circle${anim}
       class="finance-ring-arc ${className}"
       cx="100" cy="100" r="${radius}"
+      fill="none"
       stroke-dasharray="${circumference.toFixed(2)}"
       stroke-dashoffset="${offset.toFixed(2)}"
       data-value="${pct.toFixed(1)}"

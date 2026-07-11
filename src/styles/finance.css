@@ -787,6 +787,19 @@
   width: 100%;
 }
 
+.finance-chart-wrap canvas {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.finance-kpi-spark {
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin: 8px 0 2px;
+}
+
 .finance-family-chart-wrap { min-height: 320px; }
 .finance-trend-wrap { min-height: 260px; }
 .finance-donut-wrap {

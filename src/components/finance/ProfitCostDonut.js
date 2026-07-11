@@ -68,16 +68,19 @@ export async function mountProfitCostDonut(canvas, overview) {
     plugins: [{
       id: 'centreText',
       beforeDraw(chart) {
-        const { ctx, chartArea: { width, height } } = chart;
+        const { ctx, chartArea } = chart;
+        if (!chartArea) return;
+        const centerX = (chartArea.left + chartArea.right) / 2;
+        const centerY = (chartArea.top + chartArea.bottom) / 2;
         ctx.save();
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.font = '600 11px -apple-system, sans-serif';
         ctx.fillStyle = '#787980';
-        ctx.fillText('Planned revenue', width / 2, height / 2 - 8);
+        ctx.fillText('Planned revenue', centerX, centerY - 8);
         ctx.font = '700 18px -apple-system, sans-serif';
         ctx.fillStyle = '#1d1d1f';
-        ctx.fillText(GBP_WHOLE.format(revenue), width / 2, height / 2 + 12);
+        ctx.fillText(GBP_WHOLE.format(revenue), centerX, centerY + 12);
         ctx.restore();
       },
     }],

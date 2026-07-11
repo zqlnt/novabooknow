@@ -1,45 +1,63 @@
 import { GBP_WHOLE, NUMBER, escapeHtml } from './utils.js';
 
-export function renderFinanceMetricCard({ label, value, note, tone = 'white', loading = false }) {
+function renderSparkline(ratio, color) {
+  const width = Math.min(100, Math.max(4, ratio));
+  return `<svg class="finance-kpi-spark" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="5" width="${width}" height="10" rx="5" fill="${color}"/></svg>`;
+}
+
+export function renderFinanceMetricCard({ label, value, note, tone = 'white', loading = false, sparkRatio = null, sparkColor = '#007aff' }) {
   if (loading) {
     return `<article class="finance-kpi finance-kpi-skeleton ${tone}"><span>&nbsp;</span><strong>&nbsp;</strong><small>&nbsp;</small></article>`;
   }
+  const spark = sparkRatio === null ? '' : renderSparkline(sparkRatio, sparkColor);
   return `
     <article class="finance-kpi ${tone}">
       <span>${escapeHtml(label)}</span>
       <strong>${escapeHtml(value)}</strong>
+      ${spark}
       <small>${escapeHtml(note || '')}</small>
     </article>`;
 }
 
 export function renderFinanceKpiGrid(overview) {
   const hasInvoices = (overview?.invoicedThisMonth ?? 0) > 0;
+  const margin = overview?.plannedProfitMarginPercent ?? 0;
+  const costRatio = overview?.plannedCostRatioPercent ?? 0;
+  const collection = overview?.collectionRatePercent ?? 0;
   const items = [
     {
       label: 'Planned revenue',
       value: GBP_WHOLE.format(overview?.plannedRevenue ?? 0),
       note: `${overview?.familiesWithPlan ?? 0} family profiles`,
       tone: 'blue',
+      sparkRatio: 100,
+      sparkColor: '#007aff',
     },
     {
       label: 'Contribution profit',
       value: GBP_WHOLE.format(overview?.plannedProfit ?? 0),
-      note: `${NUMBER.format(overview?.plannedProfitMarginPercent ?? 0)}% margin`,
+      note: `${NUMBER.format(margin)}% margin`,
       tone: 'green',
+      sparkRatio: margin,
+      sparkColor: '#35c759',
     },
     {
       label: 'Allocated cost',
       value: GBP_WHOLE.format(overview?.plannedCost ?? 0),
-      note: `${NUMBER.format(overview?.plannedCostRatioPercent ?? 0)}% of revenue`,
+      note: `${NUMBER.format(costRatio)}% of revenue`,
       tone: 'grey',
+      sparkRatio: costRatio,
+      sparkColor: '#6f7178',
     },
     {
       label: hasInvoices ? 'Actual received' : 'Collection status',
       value: hasInvoices ? GBP_WHOLE.format(overview?.receivedThisMonth ?? 0) : 'Not started',
       note: hasInvoices
-        ? `${NUMBER.format(overview?.collectionRatePercent ?? 0)}% collected`
+        ? `${NUMBER.format(collection)}% collected`
         : 'No invoice or payment history has been recorded yet.',
       tone: 'white',
+      sparkRatio: hasInvoices ? collection : 8,
+      sparkColor: '#9b7ce8',
     },
   ];
   return `<div class="finance-kpi-grid">${items.map(renderFinanceMetricCard).join('')}</div>`;

@@ -42,9 +42,11 @@ export function filterFamilies(families, search) {
 
 let chartModulePromise = null;
 
-export function loadChartJs() {
+export async function loadChartJs() {
   if (!chartModulePromise) {
-    chartModulePromise = import('https://cdn.jsdelivr.net/npm/chart.js@4.4.7/+esm');
+    chartModulePromise = import('https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm').then((mod) => ({
+      Chart: mod.default || mod.Chart,
+    }));
   }
   return chartModulePromise;
 }
