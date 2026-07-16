@@ -67,8 +67,13 @@ h1{font-size:clamp(40px,5vw,64px);line-height:.9;letter-spacing:-.078em;margin:1
 .mode-card strong{display:block;font-size:15px;font-weight:750;letter-spacing:-.03em}
 .mode-card span{display:block;margin-top:3px;font-size:12px;line-height:1.35;color:var(--muted)}
 .mode-card .mode-card-kicker{display:none}
-.auth-mode-switch{margin-top:12px;border:0;background:transparent;color:var(--blue);font-size:13px;font-weight:720;padding:0;cursor:pointer}
-.auth-mode-switch:hover{text-decoration:underline;text-underline-offset:3px}
+.auth-mode-switch{margin:0 0 14px;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 10px;border:1px solid rgba(0,0,0,.06);background:#f5f5f7;border-radius:999px;color:var(--ink);font-size:13px;font-weight:720;cursor:pointer;transition:background .15s ease,border-color .15s ease,box-shadow .15s ease}
+.auth-mode-switch:hover{background:#fff;border-color:rgba(0,122,255,.35);box-shadow:0 0 0 4px rgba(0,122,255,.08)}
+.auth-mode-switch .auth-back-icon,
+.side-mode-row .auth-back-icon{width:16px;height:16px;display:block;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.auth-mode-switch .auth-mode-switch-label{color:var(--ink)}
+.side-mode-row button{border:0;background:transparent;color:var(--blue);font-size:11px;font-weight:700;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.side-mode-row button .auth-back-icon{width:12px;height:12px}
 .event-dot.revision{background:#5ac8fa;box-shadow:0 0 0 2px rgba(90,200,250,.18)}
 .event-chip.revision{background:#e8f7ff;border-color:#b8e4ff;color:#0a66d8}
 .event-dot.attendance{background:#ff9f0a;box-shadow:0 0 0 2px rgba(255,159,10,.18)}
@@ -87,7 +92,6 @@ h1{font-size:clamp(40px,5vw,64px);line-height:.9;letter-spacing:-.078em;margin:1
 .plan-controls input,.plan-controls select{width:100%;border:1px solid rgba(0,0,0,.07);background:#f6f6f8;border-radius:14px;padding:10px 12px;outline:none}
 .mode-pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;background:rgba(0,122,255,.1);color:var(--blue);font-size:11px;font-weight:750;letter-spacing:-.01em}
 .side-mode-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
-.side-mode-row button{border:0;background:transparent;color:var(--blue);font-size:11px;font-weight:700;padding:0;cursor:pointer}
 body.mode-student .mode-hide-student,
 body.mode-teacher .mode-hide-teacher,
 body.mode-org .mode-hide-org{display:none!important}
@@ -110,7 +114,7 @@ body.mode-teacher .section-head:has(+ #dashboardCards){display:none!important}
 <div class="shell">
  <aside class="sidebar glass">
   <div class="brand brand-lockup"><img class="brand-logo" src="assets/nova-learning.png" alt="Nova Learning"><div class="nova-wordmark" aria-label="Nova Org">Nova <span class="muted">Org</span></div></div>
-  <div class="side-mode-row"><span class="mode-pill" id="sideModePill">Org mode</span><button type="button" id="sideChangeMode">Change</button></div>
+  <div class="side-mode-row"><span class="mode-pill" id="sideModePill">Org mode</span><button type="button" id="sideChangeMode" aria-label="Change mode"><svg class="auth-back-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Change</button></div>
   <nav class="desktop-nav" aria-label="Nova navigation">
    <button class="nav-button active" data-view="dashboard"><svg class="icon" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5V21h-6v-6H9v6H3z"/></svg><span class="nav-label" id="navLabelDashboard">Dashboard</span><span class="nav-badge" id="navBadgeDashboard">Overview</span></button>
    <button class="nav-button" data-view="calendar"><svg class="icon" viewBox="0 0 24 24"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1z"/></svg><span class="nav-label" id="navLabelCalendar">Calendar</span><span class="nav-badge" id="taskBadge">Tasks</span></button>
@@ -209,8 +213,11 @@ body.mode-teacher .section-head:has(+ #dashboardCards){display:none!important}
     </div>
    </div>
    <div id="authLoginView" class="hidden">
+    <button type="button" class="auth-mode-switch" id="authChangeMode" aria-label="Back to choose mode">
+     <svg class="auth-back-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+     <span class="auth-mode-switch-label">Change mode</span>
+    </button>
     <p class="auth-mode-title" id="authLoginTitle">Sign in with your Nova account</p>
-    <button type="button" class="auth-mode-switch" id="authChangeMode">Change mode</button>
     <form class="auth-form" id="authGateForm" novalidate>
      <label class="auth-field"><input id="authGateEmail" type="email" autocomplete="username" placeholder="Email address" required></label>
      <label class="auth-field"><input id="authGatePassword" type="password" autocomplete="current-password" placeholder="Password" required><button class="auth-password-toggle" id="authPasswordToggle" type="button" aria-label="Show password">Show</button></label>
