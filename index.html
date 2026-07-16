@@ -61,12 +61,26 @@ h1{font-size:clamp(40px,5vw,64px);line-height:.9;letter-spacing:-.078em;margin:1
 @media(display-mode:standalone){.auth-gate{padding-top:max(28px,env(safe-area-inset-top))}.auth-screen{min-height:100dvh}}
 
 .mode-picker{display:grid;gap:8px;margin-top:6px}
-.mode-card{appearance:none;-webkit-appearance:none;width:100%;text-align:left;border:1px solid rgba(0,0,0,.07);background:#f6f6f8;border-radius:16px;padding:12px 13px;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease,background .15s ease}
-.mode-card:hover{background:#fff;border-color:rgba(0,122,255,.45);box-shadow:0 0 0 4px rgba(0,122,255,.08)}
+.mode-card{appearance:none;-webkit-appearance:none;width:100%;text-align:left;border:1px solid transparent;border-radius:16px;padding:12px 13px;cursor:pointer;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center;transition:border-color .15s ease,box-shadow .15s ease,background .15s ease,transform .12s ease}
 .mode-card:active{transform:scale(.99)}
+.mode-card-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}
+.mode-card-icon svg{width:20px;height:20px;display:block;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.mode-card-copy{min-width:0}
 .mode-card strong{display:block;font-size:15px;font-weight:750;letter-spacing:-.03em}
 .mode-card span{display:block;margin-top:3px;font-size:12px;line-height:1.35;color:var(--muted)}
 .mode-card .mode-card-kicker{display:none}
+.mode-card--org{background:#f0f0f2;border-color:rgba(110,110,115,.18);color:#3a3a3c}
+.mode-card--org .mode-card-icon{background:#e4e4e8;color:#636366}
+.mode-card--org:hover{background:#eaeaed;border-color:rgba(110,110,115,.35);box-shadow:0 0 0 4px rgba(110,110,115,.08)}
+.mode-card--teacher{background:#e8f1ff;border-color:rgba(0,122,255,.22);color:#0a66d8}
+.mode-card--teacher .mode-card-icon{background:#d6e8ff;color:#007aff}
+.mode-card--teacher strong{color:#0a66d8}
+.mode-card--teacher:hover{background:#dff0ff;border-color:rgba(0,122,255,.45);box-shadow:0 0 0 4px rgba(0,122,255,.1)}
+.mode-card--student{background:#eef9ff;border-color:rgba(90,200,250,.35);color:#2a8fc4}
+.mode-card--student .mode-card-icon{background:#dff3ff;color:#5ac8fa}
+.mode-card--student strong{color:#1f7aab}
+.mode-card--student:hover{background:#e6f6ff;border-color:rgba(90,200,250,.55);box-shadow:0 0 0 4px rgba(90,200,250,.12)}
+.mode-card--teacher span,.mode-card--student span,.mode-card--org span{color:#6e6e73}
 .auth-mode-switch{margin:0 0 14px;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 10px;border:1px solid rgba(0,0,0,.06);background:#f5f5f7;border-radius:999px;color:var(--ink);font-size:13px;font-weight:720;cursor:pointer;transition:background .15s ease,border-color .15s ease,box-shadow .15s ease}
 .auth-mode-switch:hover{background:#fff;border-color:rgba(0,122,255,.35);box-shadow:0 0 0 4px rgba(0,122,255,.08)}
 .auth-mode-switch .auth-back-icon,
@@ -207,9 +221,18 @@ body.mode-teacher .section-head:has(+ #dashboardCards){display:none!important}
    <div id="authModeView">
     <p class="auth-mode-title">Continue as</p>
     <div class="mode-picker" role="group" aria-label="Choose app mode">
-     <button type="button" class="mode-card" data-pick-mode="org"><strong>Organisation</strong><span>Families, calendar, finance and centre operations.</span></button>
-     <button type="button" class="mode-card" data-pick-mode="teacher"><strong>Teacher</strong><span>Your class list and daily attendance.</span></button>
-     <button type="button" class="mode-card" data-pick-mode="student"><strong>Student</strong><span>GCSE subjects and revision calendar.</span></button>
+     <button type="button" class="mode-card mode-card--org" data-pick-mode="org">
+      <span class="mode-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-8h6v8"/></svg></span>
+      <span class="mode-card-copy"><strong>Organisation</strong><span>Families, calendar, finance and centre operations.</span></span>
+     </button>
+     <button type="button" class="mode-card mode-card--teacher" data-pick-mode="teacher">
+      <span class="mode-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M8 19V7l8-3v15"/><path d="M8 11h6"/></svg></span>
+      <span class="mode-card-copy"><strong>Teacher</strong><span>Your class list and daily attendance.</span></span>
+     </button>
+     <button type="button" class="mode-card mode-card--student" data-pick-mode="student">
+      <span class="mode-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19c1.2-3.2 3.4-4.8 6.5-4.8S17.8 15.8 19 19"/></svg></span>
+      <span class="mode-card-copy"><strong>Student</strong><span>GCSE subjects and revision calendar.</span></span>
+     </button>
     </div>
    </div>
    <div id="authLoginView" class="hidden">
